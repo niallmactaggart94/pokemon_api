@@ -1,0 +1,21 @@
+[
+    {
+      "uid": "tsc",
+      "append": true,
+      "fifo": true,
+      "script": "tsc",
+      "sourceDir": "./node_modules/typescript/bin/",
+      "workingDir": "./",
+      "args": ["--build", "src/tsconfig.json"]
+    },
+    {
+      "uid": "pokemon_api",
+      "append": true,
+      "debug": false,
+      "watch": false,
+      "script": "index.js",
+      "sourceDir": "./build",
+      "workingDir": "./"
+    }
+  ]
+  

@@ -1,0 +1,39 @@
+{
+	"root": true,
+	"plugins": [
+		"@typescript-eslint"
+	],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"prettier"
+	],
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	},
+	"parser": "@typescript-eslint/parser",
+	"overrides": [
+		{
+			"files": ["**/*.test.ts", "**/*.tests.ts"],
+			"plugins": ["jest"],
+			"extends": [
+				"plugin:jest/recommended"
+			],
+			"env": {
+				"jest/globals": true
+			}
+		}
+	],
+	"rules": {
+		"@typescript-eslint/no-unused-vars": [
+			"warn",
+			{ 
+				"argsIgnorePattern": "^_",
+				"varsIgnorePattern": "^_",
+				"caughtErrorsIgnorePattern": "^_"
+			}
+		]
+	}
+}
