@@ -10,7 +10,13 @@ const BASE_PATH = path.join(__dirname, 'interfaces', 'db');
 const config = {
   development: {
     client: 'pg',
-    connection: `postgres://${PG_USER}:${PG_PASSWORD}@${PG_HOST}:${PG_PORT}/${PG_DATABASE}`,
+    connection: {
+      host: PG_HOST || 'localhost',
+      database: PG_DATABASE || 'pokemon_db',
+      port: PG_PORT || 5432,
+      user: PG_USER || 'whosthatpokemon',
+      password: PG_PASSWORD || 'whosthatpokemon',
+    },
     useNullAsDefault: true,
     migrations: {
       directory: path.join(BASE_PATH, 'migrations'),

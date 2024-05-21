@@ -15,7 +15,9 @@ RUN rm -rf Makefile *.md docker *.yml *.txt \
 # Install node packages
 RUN npm install
 RUN npm run build
+
 COPY docker/pokemon/entrypoint.sh /entrypoint.sh
+RUN ["chmod", "+x", "/entrypoint.sh"]
 
 RUN apk add postgresql-client
 RUN apk add curl

@@ -12,7 +12,7 @@
       "uid": "pokemon_api",
       "append": true,
       "debug": false,
-      "watch": false,
+      "watch": true,
       "script": "index.js",
       "sourceDir": "./build",
       "workingDir": "./"

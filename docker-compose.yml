@@ -33,8 +33,6 @@ services:
       timeout: "20s"
       retries: 10
     environment:
-      PGUSER: whosthatpokemon
-      PGPASSWORD: whosthatpokemon
       POSTGRES_DB: pokemon_db
       POSTGRES_USER: whosthatpokemon
       POSTGRES_PASSWORD: whosthatpokemon
@@ -52,14 +50,13 @@ services:
         - NPM_TOKEN
     volumes:
       - ./:/pokemon_api/
+      - /pokemon_api/node_modules
       - ./docker/test.env:/pokemon_api/.env
-    environment:
-      PGUSER: whosthatpokemon
-      PGPASSWORD: whosthatpokemon
-      POSTGRES_DB: pokemon_db
-      POSTGRES_USER: whosthatpokemon
-      POSTGRES_PASSWORD: whosthatpokemon
-      POSTGRES_HOST_AUTH_METHOD: trust
+    depends_on:
+      pokemon_postgres:
+        condition: service_healthy
+    env_file:
+      - ./docker/test.env
     networks:
       - pokemon_world
-    command: npm run db --prefix /pokemon_api -- migrate:latest
+    command: npm run db --prefix /pokemon_api -- migrate:latest && npm run migratePokemon --prefix /pokemon_api

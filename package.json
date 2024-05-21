@@ -11,7 +11,9 @@
     "test": "test",
     "build": "tsc --build src/tsconfig.json",
     "db": "knex --knexfile ./src/knexfile.ts",
-    "start": "tsc --build src/tsconfig.json && forever config/forever.json"
+    "start": "tsc --build src/tsconfig.json && forever config/forever.json",
+    "migratePokemon": "node build/dataMigrations/migratePokemon.js"
+
   },
   "author": "Niall MacTaggart",
   "license": "ISC",
