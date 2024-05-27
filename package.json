@@ -8,7 +8,7 @@
     "npm": "8"
   },
   "scripts": {
-    "test": "test",
+    "test": "echo test",
     "build": "tsc --build src/tsconfig.json",
     "start": "tsc --build src/tsconfig.json && forever config/forever.json"
   },

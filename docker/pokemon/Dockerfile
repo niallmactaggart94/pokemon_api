@@ -1,7 +1,5 @@
 FROM node:20-alpine as base
 
-ARG NPM_TOKEN
-
 LABEL maintainer=""
 EXPOSE 3000
 ENTRYPOINT ["/entrypoint.sh"]

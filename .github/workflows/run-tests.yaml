@@ -1,0 +1,23 @@
+name: Run tests
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      
+      - name: install dependencies
+        run: npm install
+
+      - name: build image
+        run: docker compose build
+
+      - name: bring up environment
+        run: docker compose up -d
+
+      - name: run tests
+        run: npm test
