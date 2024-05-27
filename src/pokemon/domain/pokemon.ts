@@ -15,6 +15,14 @@ interface PokeSprites {
   back_shiny: string | null;
   front_default: string | null;
   front_shiny: string | null;
+  other: {
+    home: {
+      front_default: string | null;
+    };
+    dream_world: {
+      front_default: string | null
+    }
+  };
 }
 
 export interface PokeDetails {
