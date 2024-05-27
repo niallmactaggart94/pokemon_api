@@ -1,6 +1,7 @@
 import Koa from "koa";
 import { getConfig } from "./config/appConfig";
 import { setupMiddleware } from "./interfaces/http/middleware/setupMiddleware";
+import { initRedis } from "./interfaces/redis/redisSetup";
 
 export async function startApp() {
   const { port, host, env } = getConfig();
@@ -8,6 +9,8 @@ export async function startApp() {
   if (!port || !host) {
     throw new Error("no port or host provided");
   }
+
+  initRedis();
 
   console.log(`App run in ${env} environment`);
 

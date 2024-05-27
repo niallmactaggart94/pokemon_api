@@ -25,6 +25,8 @@ function handleValidationErrors(ctx: Context, error: any) {
     handleParamsValidation(ctx, error);
   } else if (ctx.invalid.body) {
     handleBodyValidation(ctx, error);
+  } else if (ctx.invalid.query) {
+    handleQueryValidation(ctx, error);
   } else {
     handleUnknownValidation(ctx, error);
   }
@@ -35,6 +37,14 @@ function handleBodyValidation(ctx: Context, error: any) {
   httpResponse(ctx).createErrorResponse(
     error.status,
     ...errors.map((el) => ({ type: HttpErrorType.RequestFormatError, message: el.message, field: el.context.key }))
+  );
+}
+
+function handleQueryValidation(ctx: Context, error: any) {
+  const errors: any[] = ctx.invalid.query.details;
+  httpResponse(ctx).createErrorResponse(
+    error.status,
+    ...errors.map((el) => ({ type: HttpErrorType.QueryFormatError, message: el.message, field: el.context.key }))
   );
 }
 

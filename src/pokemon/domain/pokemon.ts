@@ -23,8 +23,14 @@ export interface PokeDetails {
   sprites: PokeSprites;
 }
 
-export interface Pokemon {
-  name: string;
-  id: number;
+export interface PokemonVerificationResponse {
+  isCorrect: boolean;
   imageUrl: string;
+  name: string;
+}
+
+export interface RandomPokemonReponse {
+  choices: string[];
+  correctId: number;
+  correctImageUrl: string;
 }

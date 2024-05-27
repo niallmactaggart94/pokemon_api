@@ -18,45 +18,14 @@ services:
       - "3123:3000"
     networks:
       - pokemon_world
-    depends_on:
-      pokemon_postgres:
-        condition: "service_healthy"
     command: npm run --prefix /pokemon_api start
 
-  pokemon_postgres:
-    image: postgres
-    restart: always
-    healthcheck:
-      test:
-        - "CMD-SHELL"
-        - "pg_isready"
-      timeout: "20s"
-      retries: 10
-    environment:
-      POSTGRES_DB: pokemon_db
-      POSTGRES_USER: whosthatpokemon
-      POSTGRES_PASSWORD: whosthatpokemon
-      POSTGRES_HOST_AUTH_METHOD: trust
-    ports:
-        - "5432:5432"
-    networks:
-        - pokemon_world
-
-  pokemon_migrate:
-    build:
-      context: .
-      dockerfile: docker/pokemon/Dockerfile
-      args: 
-        - NPM_TOKEN
+  pokemon_redis:
+    image: redis:5.0.7-alpine
     volumes:
-      - ./:/pokemon_api/
-      - /pokemon_api/node_modules
-      - ./docker/test.env:/pokemon_api/.env
-    depends_on:
-      pokemon_postgres:
-        condition: service_healthy
-    env_file:
-      - ./docker/test.env
+      - ./docker/redis.test.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server --databases 1001
+    ports:
+      - "4302:6379"
     networks:
-      - pokemon_world
-    command: npm run db --prefix /pokemon_api -- migrate:latest && npm run migratePokemon --prefix /pokemon_api
+     - pokemon_world

@@ -1,6 +1,5 @@
 import Router, { Joi, Spec } from 'koa-joi-router';
-import verifyPokemon from '../handlers/verifyPokemonHandler';
-import getRandomPokemon from '../handlers/getRandomPokemonHandler';
+import { getRandomPokemon, verifyPokemon } from './pokemonHandler';
 const router = Router();
 
 router.route(<Spec>{
