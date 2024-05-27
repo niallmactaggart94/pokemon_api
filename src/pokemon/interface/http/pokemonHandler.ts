@@ -15,7 +15,7 @@ export const verifyPokemon = async (ctx: Context, next: Next) => {
       const notFoundError = error === VerifyPokemonErrorType.PokemonNotFound;
       const status = notFoundError ? 404 : 400;
       httpResponse(ctx).createErrorResponse(status, {
-        message: notFoundError ? 'Unknown error' : 'Pokemon with that ID not found',
+        message: notFoundError ? 'Error querying PokeAPI' : 'Pokemon with that ID not found',
         type: error,
       });
     });
@@ -29,7 +29,7 @@ export const getRandomPokemon = async (ctx: Context, next: Next) => {
     .ifSuccess((value) => httpResponse(ctx).createSuccessResponse(200, value))
     .ifError((error) => {
       httpResponse(ctx).createErrorResponse(400, {
-        message: 'Error fetching random pokemon, please try again',
+        message: 'Error querying PokeAPI',
         type: error,
       });
     });
