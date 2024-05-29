@@ -1,0 +1,14 @@
+version: '3.9'
+networks:
+  pokemon_world:
+
+services:
+  pokemon_redis_test:
+    image: redis:5.0.7-alpine
+    volumes:
+      - ./docker/redis.test.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server --databases 1001
+    ports:
+      - "4302:6379"
+    networks:
+     - pokemon_world

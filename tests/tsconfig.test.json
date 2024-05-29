@@ -1,0 +1,44 @@
+{
+    "compilerOptions": {
+        "outDir": "../build-tests",
+        "allowJs": true,
+        "checkJs": false,
+        "alwaysStrict": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "es2017",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "lib": ["es2018", "esnext.array", "dom"],
+        "baseUrl": "./",
+        "paths": {
+            "*": [
+                "../node_modules/*.d.ts",
+                "./src/*.d.ts"
+            ]
+        },
+        "forceConsistentCasingInFileNames": true,
+        "newLine": "lf",
+        "noErrorTruncation": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noStrictGenericChecks": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "removeComments": true,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "strictPropertyInitialization":true,
+        "strictNullChecks": true
+    },
+    "include": ["**/*.ts", "**/*.tsx"],
+    "exclude": [
+        "../node_modules"
+    ],
+    "preset": "ts-jest"
+}

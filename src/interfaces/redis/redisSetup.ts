@@ -30,5 +30,7 @@ export function redisClient() {
     ) => Promise<number>,
     hget: promisify(client.hget).bind(client) as unknown as (key: string, field: string) => Promise<string>,
     hgetall: promisify(client.hgetall).bind(client) as unknown as (key: string) => Promise<{ [key: string]: string }>,
+    end: promisify(client.end).bind(client),
+    flushall: promisify(client.flushall).bind(client),
   };
 }

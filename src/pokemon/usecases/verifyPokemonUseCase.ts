@@ -14,7 +14,7 @@ export const verifyPokemonUseCase = async (
   pokemonId: number,
   pokemonName: string
 ): Promise<Result<PokemonVerificationResponse, VerifyPokemonErrorType>> => {
-  let pokemon: PokemonCache;
+  let pokemon: PokemonCache | null = null;
 
   const pokemonCache = await redisClient().hget(POKEMON_CACHE, pokemonId.toString());
   if (!pokemonCache) {
@@ -23,9 +23,11 @@ export const verifyPokemonUseCase = async (
         `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
       );
 
-      const pokemonCacheDetails = createPokemonCacheDetails(pokeResponse.data);
-      await pokemonCacheRepository.updatePokemonCache(pokemonCacheDetails);
-      pokemon = pokemonCacheDetails;
+      if (pokeResponse.data) {
+        const pokemonCacheDetails = createPokemonCacheDetails(pokeResponse.data);
+        await pokemonCacheRepository.updatePokemonCache(pokemonCacheDetails);
+        pokemon = pokemonCacheDetails;
+      }
     } catch (err) {
       return createErrorResult(VerifyPokemonErrorType.PokemonLoadFailure);
     }

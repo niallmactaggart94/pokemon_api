@@ -10,8 +10,10 @@ export enum RandomPokemonError {
   NoPokemonFound = 'NoPokemonFound',
 }
 
+export const RANDOM_POKEMON_LIMIT = 4;
+
 const getRandomPokemon = (pokemonCache: PokemonCache[]): RandomPokemonReponse => {
-  const randomPokemon = pokemonCache.sort(() => Math.random() - Math.random()).slice(0, 4);
+  const randomPokemon = pokemonCache.sort(() => 0.5 - Math.random()).slice(0, RANDOM_POKEMON_LIMIT);
   const [correctPokemon] = randomPokemon;
   return {
     choices: randomPokemon
@@ -35,9 +37,11 @@ export const getRandomPokemonUseCase = async (): Promise<Result<RandomPokemonRep
       await Promise.all(
         fiftyPokemon.map(async (poke) => {
           const pokeDetailsResponse: AxiosResponse<PokeDetails> = await axios.get(poke.url);
-          const pokemonCache = createPokemonCacheDetails(pokeDetailsResponse.data);
-          pokemon.push(pokemonCache);
-          await pokemonCacheRepository.updatePokemonCache(pokemonCache);
+          if (pokeDetailsResponse) {
+            const pokemonCache = createPokemonCacheDetails(pokeDetailsResponse.data);
+            pokemon.push(pokemonCache);
+            await pokemonCacheRepository.updatePokemonCache(pokemonCache);
+          }
         })
       );
     } catch (err) {
@@ -47,7 +51,7 @@ export const getRandomPokemonUseCase = async (): Promise<Result<RandomPokemonRep
     pokemon = Object.values(pokeCache).map((pokemon) => JSON.parse(pokemon) as PokemonCache);
   }
 
-  return pokemon.length
+  return pokemon.length >= RANDOM_POKEMON_LIMIT
     ? createSuccessResult(getRandomPokemon(pokemon))
     : createErrorResult(RandomPokemonError.NoPokemonFound);
 };

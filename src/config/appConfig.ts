@@ -20,7 +20,7 @@ const appConfig: AppConfig = {
   host: 'localhost',
   redis: {
     host: TEST_REDIS_HOST || 'localhost',
-    port: +(TEST_REDIS_PORT || 4106),
+    port: +(TEST_REDIS_PORT || 4302),
   },
 };
 

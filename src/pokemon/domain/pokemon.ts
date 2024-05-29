@@ -10,7 +10,7 @@ export interface PokeApiResponse {
   results: PokeList[];
 }
 
-interface PokeSprites {
+export interface PokeSprites {
   back_default: string | null;
   back_shiny: string | null;
   front_default: string | null;
@@ -20,8 +20,8 @@ interface PokeSprites {
       front_default: string | null;
     };
     dream_world: {
-      front_default: string | null
-    }
+      front_default: string | null;
+    };
   };
 }
 
