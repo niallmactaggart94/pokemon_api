@@ -4,6 +4,7 @@ import { redisClient } from '../../interfaces/redis/redisSetup';
 import pokemonCacheRepository, { POKEMON_CACHE, PokemonCache } from '../interface/redis/pokemonCacheRepository';
 import { Result, createErrorResult, createSuccessResult } from '../../utils/Result';
 import { createPokemonCacheDetails } from '../domain/pokemonCacheModel';
+import logger from '../../utils/Logger';
 
 export enum RandomPokemonError {
   PokemonLoadFailure = 'PokemonLoadFailure',
@@ -45,6 +46,7 @@ export const getRandomPokemonUseCase = async (): Promise<Result<RandomPokemonRep
         })
       );
     } catch (err) {
+      logger.error(`Error fetching random pokemon`);
       return createErrorResult(RandomPokemonError.PokemonLoadFailure);
     }
   } else {

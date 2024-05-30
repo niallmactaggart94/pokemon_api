@@ -4,6 +4,7 @@ import { Result, createErrorResult, createSuccessResult } from '../../utils/Resu
 import { PokeDetails, PokemonVerificationResponse } from '../domain/pokemon';
 import pokemonCacheRepository, { POKEMON_CACHE, PokemonCache } from '../interface/redis/pokemonCacheRepository';
 import { createPokemonCacheDetails } from '../domain/pokemonCacheModel';
+import logger from '../../utils/Logger';
 
 export enum VerifyPokemonErrorType {
   PokemonNotFound = 'PokemonNotFound',
@@ -29,6 +30,7 @@ export const verifyPokemonUseCase = async (
         pokemon = pokemonCacheDetails;
       }
     } catch (err) {
+      logger.error(`Error fetching random pokemon`);
       return createErrorResult(VerifyPokemonErrorType.PokemonLoadFailure);
     }
   } else {
