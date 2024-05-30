@@ -10,6 +10,7 @@
   "scripts": {
     "build": "tsc --build src/tsconfig.json",
     "start": "tsc --build src/tsconfig.json && forever config/forever.json",
+    "lint": "eslint --ext ts src",
     "unitTests": "jest unit --forceExit",
     "integrationTests": "jest int --forceExit --runInBand",
     "componentTests": "jest comp --forceExit --runInBand",
