@@ -65,5 +65,7 @@ in production.
 
 - **Analytics** - Track user interactions and game metrics (e.g., average score, time spent) using Google Analytics or a similar tool.
 
+- **Environment Variables** - Currently only one config for the application, in future, I would like to have config with relevant details for each environment (tst/stg/prod).
+
   
   
