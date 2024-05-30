@@ -58,17 +58,24 @@ describe('Unit test getRandomPokemonUseCase', () => {
     );
   });
 
-  it('GIVEN not enough values exist in the cache WHEN getRandomPokemonUseCase THEN return error response', async () => {
+  it('GIVEN not enough values exist in the cache WHEN getRandomPokemonUseCase THEN return success response', async () => {
     //GIVEN
     const mockCache = getMockCache(mockPokemon.slice(0, 3));
     hgetall.mockImplementationOnce(() => mockCache);
 
+    mockedAxios.get.mockResolvedValueOnce({
+      data: { results: mockPokemon.map((pokemon) => ({ name: pokemon.name, url: pokemon.imageUrl })) },
+    });
+
+    mockPokemon.forEach((pokemon) => {
+      mockedAxios.get.mockResolvedValueOnce({ data: { name: pokemon.name, id: pokemon.id, sprites: mockSprites } });
+    });
+
     //WHEN
-    const result = await getRandomPokemonUseCase();
+    await getRandomPokemonUseCase();
 
     //THEN
-    expect(pokemonCacheRepository.updatePokemonCache).not.toHaveBeenCalled();
-    expect(result).toStrictEqual(createErrorResult(RandomPokemonError.NoPokemonFound));
+    expect(pokemonCacheRepository.updatePokemonCache).toHaveBeenCalled();
   });
 
   it('GIVEN no values exist in the cache and a successful response from PokeApi WHEN getRandomPokemonUseCase THEN return success', async () => {

@@ -29,7 +29,7 @@ const getRandomPokemon = (pokemonCache: PokemonCache[]): RandomPokemonReponse =>
 export const getRandomPokemonUseCase = async (): Promise<Result<RandomPokemonReponse, RandomPokemonError>> => {
   let pokemon: PokemonCache[] = [];
   const pokeCache = await redisClient().hgetall(POKEMON_CACHE);
-  if (!pokeCache) {
+  if (!pokeCache || (pokeCache && Object.values(pokeCache).length < RANDOM_POKEMON_LIMIT)) {
     try {
       const pokeResponse: AxiosResponse<PokeApiResponse> = await axios.get(
         'https://pokeapi.co/api/v2/pokemon?limit=50&offset=0'
@@ -53,7 +53,7 @@ export const getRandomPokemonUseCase = async (): Promise<Result<RandomPokemonRep
     pokemon = Object.values(pokeCache).map((pokemon) => JSON.parse(pokemon) as PokemonCache);
   }
 
-  return pokemon.length >= RANDOM_POKEMON_LIMIT
+  return pokemon.length
     ? createSuccessResult(getRandomPokemon(pokemon))
     : createErrorResult(RandomPokemonError.NoPokemonFound);
 };
